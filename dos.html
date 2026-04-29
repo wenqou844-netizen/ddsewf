@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: #f2f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 10px;
+    }
+
+    .calculator {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 30px 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .display {
+      width: 100%;
+      height: 120px;
+      background: #f9fafb;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      word-break: break-all;
+    }
+
+    .input {
+      font-size: 24px;
+      color: #64748b;
+      margin-bottom: 8px;
+      min-height: 30px;
+    }
+
+    .result {
+      font-size: 48px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      height: 70px;
+      border-radius: 18px;
+      border: none;
+      font-size: 24px;
+      font-weight: 500;
+      background: #f1f5f9;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.95);
+      background: #d1d5db;
+    }
+
+    .operator {
+      background: #ff9500;
+      color: white;
+      font-weight: 600;
+    }
+
+    .operator:active {
+      background: #e68a00;
+    }
+
+    .clear {
+      background: #ef4444;
+      color: white;
+    }
+
+    .clear:active {
+      background: #dc2626;
+    }
+
+    .equal {
+      background: #16a34a;
+      color: white;
+      grid-column: span 2;
+    }
+
+    .equal:active {
+      background: #15803d;
+    }
+
+    .delete {
+      background: #64748b;
+      color: white;
+    }
+
+    .delete:active {
+      background: #475569;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display">
+      <div class="input" id="input"></div>
+      <div class="result" id="result">0</div>
+    </div>
+
+    <div class="buttons">
+      <button class="clear">C</button>
+      <button class="delete">DEL</button>
+      <button class="operator">%</button>
+      <button class="operator">/</button>
+
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button class="operator">*</button>
+
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button class="operator">-</button>
+
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button class="operator">+</button>
+
+      <button>0</button>
+      <button>.</button>
+      <button class="equal">=</button>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('input');
+    const result = document.getElementById('result');
+    let current = '';
+
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.textContent;
+
+        if (val === 'C') {
+          current = '';
+          result.textContent = '0';
+          input.textContent = '';
+        }
+
+        else if (val === 'DEL') {
+          current = current.slice(0, -1);
+          input.textContent = current;
+        }
+
+        else if (val === '=') {
+          try {
+            const res = eval(current.replace('%', '/100'));
+            result.textContent = res;
+          } catch {
+            result.textContent = 'Error';
+          }
+        }
+
+        else {
+          current += val;
+          input.textContent = current;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
